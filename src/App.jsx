@@ -136,6 +136,7 @@ function App() {
   const isRTL = language === 'ar';
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     localStorage.removeItem('socialSupportFormData');
     dispatch(resetForm());
     dispatch(setCurrentStep(1));

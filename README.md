@@ -173,16 +173,17 @@ The application fully supports English and Arabic:
 The application includes a mock API service for testing form submission:
 
 - **Mock API**: Simulates network delay (1-2 seconds) and returns a success response
-- **Loading State**: Shows a loading mask during submission
+- **Loading State**: Shows a loading mask during submission and remains visible until the success modal appears
 - **Success Modal**: Beautiful modal dialog displays after successful submission with:
   - Application ID
   - Submission status
   - Submission timestamp
   - Success message
-  - Complete form data (formatted JSON) for review
+  - Step 3 form data (situation descriptions) displayed as formatted JSON
 - **Error Handling**: Comprehensive error handling for network issues, timeouts, and server errors
 - **Form Reset**: Automatically resets the form after successful submission
 - **Data Logging**: Form data is logged to console and displayed in the submission modal
+- **Auto Scroll**: Page automatically scrolls to top on reload
 
 To use a real API, update `src/services/apiService.js` and replace `submitApplicationMock` with `submitApplication`.
 

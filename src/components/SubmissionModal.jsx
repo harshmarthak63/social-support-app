@@ -110,7 +110,7 @@ function SubmissionModal({ open, onClose, submissionData, formData }) {
 
         <Box>
           <Typography variant="h6" sx={{ mb: 2, fontWeight: 600, color: '#1e293b' }}>
-            Submitted Form Data
+            Submitted Form Data (mock API call)
           </Typography>
           <Paper
             elevation={0}
@@ -132,7 +132,7 @@ function SubmissionModal({ open, onClose, submissionData, formData }) {
                 wordBreak: 'break-word',
               }}
             >
-              {JSON.stringify(formData, null, 2)}
+              {formData ? JSON.stringify(formData, null, 2) : 'No data available'}
             </pre>
           </Paper>
         </Box>

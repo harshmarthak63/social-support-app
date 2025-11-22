@@ -189,12 +189,15 @@ function FormWizard() {
       const response = await submitApplicationMock(completeFormData);
       
       if (response.success) {
-        setSubmissionData(response.data);
-        setSubmittedFormData(completeFormData);
-        setShowSubmissionModal(true);
-        dispatch(resetForm());
-        localStorage.removeItem('socialSupportFormData');
-        dispatch(resetSubmissionState());
+        setTimeout(() => {
+          setSubmissionData(response.data);
+          setSubmittedFormData({ situationDescriptions: completeFormData.situationDescriptions });
+          setShowSubmissionModal(true);
+          dispatch(setSubmitting(false));
+          dispatch(resetForm());
+          localStorage.removeItem('socialSupportFormData');
+          dispatch(resetSubmissionState());
+        }, 500);
       }
     } catch (error) {
       console.error('Error submitting form:', error);
