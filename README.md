@@ -5,7 +5,7 @@ A modern, responsive web application for citizens to apply for financial assista
 ## Features
 
 - **3-Step Form Wizard**: Multi-step application form with progress tracking and visual stepper
-- **Dual AI Assistance**: OpenAI GPT-3.5 and Mistral AI integration to help users write professional descriptions
+- **Smart AI Assistance**: Mistral AI with automatic OpenAI fallback to help users write professional descriptions
 - **Multi-language Support**: Full English and Arabic (RTL) language support with seamless switching
 - **Responsive Design**: Optimized for mobile, tablet, and desktop devices
 - **Accessibility**: ARIA roles, keyboard navigation, and screen reader support
@@ -55,7 +55,7 @@ VITE_OPENAI_API_KEY=your_openai_api_key_here
 VITE_MISTRAL_API_KEY=your_mistral_api_key_here
 ```
 
-**Note**: Both API keys are optional. The application will work without them, but AI assistance features will be unavailable.
+**Note**: At least one API key (Mistral AI or OpenAI) is recommended for AI assistance. The application will automatically use the available service with smart fallback. If both are missing, AI assistance features will be unavailable.
 
 4. Start the development server:
 ```bash
@@ -88,7 +88,8 @@ social-support-app/
 │   │   │   ├── Step2FamilyFinancial.jsx
 │   │   │   └── Step3SituationDescriptions.jsx
 │   │   ├── AIModal.jsx
-│   │   └── FormWizard.jsx
+│   │   ├── FormWizard.jsx
+│   │   └── SubmissionModal.jsx
 │   ├── i18n/
 │   │   └── config.js
 │   ├── services/
@@ -132,24 +133,29 @@ social-support-app/
 
 ## AI Integration
 
-The application supports two AI providers:
+The application uses a smart fallback system with two AI providers:
 
-### OpenAI GPT-3.5-turbo
-- Click the purple "Help Me Write" button (✨ icon) to generate suggestions using OpenAI
+### Primary: Mistral AI
+- Primary AI provider for text generation
+- Uses mistral-small model
+- Requires `VITE_MISTRAL_API_KEY` in `.env` file
+
+### Fallback: OpenAI GPT-3.5-turbo
+- Automatic fallback if Mistral AI fails
 - Uses GPT-3.5-turbo model for text generation
 - Requires `VITE_OPENAI_API_KEY` in `.env` file
 
-### Mistral AI
-- Click the orange "Help Me Write" button (🧠 icon) to generate suggestions using Mistral AI
-- Uses mistral-small model for text generation
-- Requires `VITE_MISTRAL_API_KEY` in `.env` file
-
 ### How It Works
-1. Click the AI assistance button next to any textarea field in Step 3
-2. The AI considers context from other form fields (employment status, income, housing, marital status, dependents)
-3. A modal opens with the AI-generated suggestion
-4. Review and edit the suggestion as needed
-5. Click "Accept" to add it to the form field, or "Discard" to close without saving
+1. Click the "Help Me Write" button (✨ icon + text) next to any textarea field in Step 3
+2. The system first attempts to generate a suggestion using Mistral AI
+3. If Mistral AI fails (API key missing, rate limit, network error, etc.), it automatically falls back to OpenAI
+4. If both services fail, an appropriate error message is displayed
+5. The AI considers context from other form fields (employment status, income, housing, marital status, dependents)
+6. A modal opens with the AI-generated suggestion
+7. Review and edit the suggestion as needed
+8. Click "Accept" to add it to the form field, or "Discard" to close without saving
+
+**Note**: At least one API key (Mistral or OpenAI) is required for AI assistance to work. The application will automatically use the available service.
 
 ## Language Support
 
@@ -158,6 +164,8 @@ The application fully supports English and Arabic:
 - **English (LTR)**: Default language with left-to-right layout
 - **Arabic (RTL)**: Right-to-left layout with proper text direction
 - **Language Switcher**: Click the language icon in the header to toggle between languages
+  - Shows "Arabic" when in English mode
+  - Shows "English" when in Arabic mode
 - **Persistent**: Language preference is maintained during the session
 
 ## Form Submission
@@ -166,9 +174,15 @@ The application includes a mock API service for testing form submission:
 
 - **Mock API**: Simulates network delay (1-2 seconds) and returns a success response
 - **Loading State**: Shows a loading mask during submission
-- **Success Feedback**: Displays application ID and status after successful submission
+- **Success Modal**: Beautiful modal dialog displays after successful submission with:
+  - Application ID
+  - Submission status
+  - Submission timestamp
+  - Success message
+  - Complete form data (formatted JSON) for review
 - **Error Handling**: Comprehensive error handling for network issues, timeouts, and server errors
 - **Form Reset**: Automatically resets the form after successful submission
+- **Data Logging**: Form data is logged to console and displayed in the submission modal
 
 To use a real API, update `src/services/apiService.js` and replace `submitApplicationMock` with `submitApplication`.
 

@@ -204,7 +204,7 @@ function App() {
             >
               <LanguageIcon sx={{ mr: 0.5 }} />
               <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                {language === 'en' ? 'AR' : 'EN'}
+                {language === 'en' ? 'Arabic' : 'English'}
               </Typography>
             </IconButton>
           </Toolbar>

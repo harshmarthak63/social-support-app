@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import {
@@ -25,6 +25,7 @@ import Step1PersonalInfo from './steps/Step1PersonalInfo';
 import Step2FamilyFinancial from './steps/Step2FamilyFinancial';
 import Step3SituationDescriptions from './steps/Step3SituationDescriptions';
 import AIModal from './AIModal';
+import SubmissionModal from './SubmissionModal';
 import { setCurrentStep, updateStep1, updateStep2, updateStep3, resetForm } from '../store/slices/formSlice';
 import { setSubmitting, resetSubmissionState } from '../store/slices/uiSlice';
 import { saveFormData } from '../utils/localStorage';
@@ -79,6 +80,9 @@ function FormWizard() {
   const language = useSelector((state) => state.ui.language);
   const isRTL = language === 'ar';
   const isUpdatingFromRedux = useRef(false);
+  const [showSubmissionModal, setShowSubmissionModal] = useState(false);
+  const [submissionData, setSubmissionData] = useState(null);
+  const [submittedFormData, setSubmittedFormData] = useState(null);
 
   const {
     register,
@@ -185,18 +189,12 @@ function FormWizard() {
       const response = await submitApplicationMock(completeFormData);
       
       if (response.success) {
+        setSubmissionData(response.data);
+        setSubmittedFormData(completeFormData);
+        setShowSubmissionModal(true);
         dispatch(resetForm());
         localStorage.removeItem('socialSupportFormData');
-        
-        setTimeout(() => {
-          alert(
-            `${t('form.submitSuccess') || 'Application submitted successfully!'}\n\n` +
-            `Application ID: ${response.data.applicationId}\n` +
-            `Status: ${response.data.status}\n\n` +
-            response.data.message
-          );
-          dispatch(resetSubmissionState());
-        }, 100);
+        dispatch(resetSubmissionState());
       }
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -415,6 +413,12 @@ function FormWizard() {
         </Paper>
       </Fade>
       {showAIModal && <AIModal setValue={setValue} />}
+      <SubmissionModal
+        open={showSubmissionModal}
+        onClose={() => setShowSubmissionModal(false)}
+        submissionData={submissionData}
+        formData={submittedFormData}
+      />
       <Backdrop
         sx={{
           color: '#fff',
