@@ -1,0 +1,195 @@
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+
+const resources = {
+  en: {
+    translation: {
+      app: {
+        title: 'Social Support Application',
+        subtitle: 'Apply for Financial Assistance',
+      },
+      form: {
+        next: 'Next',
+        previous: 'Previous',
+        submit: 'Submit Application',
+        submitting: 'Submitting...',
+        submitSuccess: 'Application Submitted Successfully',
+        submitError: 'Error submitting application. Please try again.',
+        submitTimeout: 'Request timed out. Please try again.',
+        submitNetworkError: 'Network error. Please check your connection and try again.',
+        submitServerError: 'Server error. Please try again later.',
+        submitValidationError: 'Validation error. Please check your form data.',
+        save: 'Save Progress',
+        step1: 'Personal Information',
+        step2: 'Family & Financial Info',
+        step3: 'Situation Descriptions',
+        fields: {
+          name: 'Full Name',
+          nationalId: 'National ID',
+          dateOfBirth: 'Date of Birth',
+          gender: 'Gender',
+          address: 'Address',
+          city: 'City',
+          state: 'State/Province',
+          country: 'Country',
+          phone: 'Phone Number',
+          email: 'Email Address',
+          maritalStatus: 'Marital Status',
+          dependents: 'Number of Dependents',
+          employmentStatus: 'Employment Status',
+          monthlyIncome: 'Monthly Income',
+          housingStatus: 'Housing Status',
+          currentFinancialSituation: 'Current Financial Situation',
+          employmentCircumstances: 'Employment Circumstances',
+          reasonForApplying: 'Reason for Applying',
+        },
+        gender: {
+          male: 'Male',
+          female: 'Female',
+          other: 'Other',
+        },
+        maritalStatus: {
+          single: 'Single',
+          married: 'Married',
+          divorced: 'Divorced',
+          widowed: 'Widowed',
+        },
+        employmentStatus: {
+          employed: 'Employed',
+          unemployed: 'Unemployed',
+          selfEmployed: 'Self-Employed',
+          retired: 'Retired',
+          student: 'Student',
+        },
+        housingStatus: {
+          owned: 'Owned',
+          rented: 'Rented',
+          livingWithFamily: 'Living with Family',
+          homeless: 'Homeless',
+        },
+      },
+      ai: {
+        helpMeWrite: 'Help Me Write',
+        helpMeWriteMistral: 'Help Me Write (Mistral AI)',
+        generating: 'Generating suggestion...',
+        suggestion: 'AI Suggestion',
+        accept: 'Accept',
+        edit: 'Edit',
+        discard: 'Discard',
+        error: 'An error occurred while generating the suggestion. Please try again.',
+        timeout: 'Request timed out. Please try again.',
+      },
+      validation: {
+        required: 'This field is required',
+        email: 'Please enter a valid email address',
+        phone: 'Please enter a valid phone number',
+      },
+      progress: {
+        step: 'Step',
+        of: 'of',
+      },
+    },
+  },
+  ar: {
+    translation: {
+      app: {
+        title: 'تطبيق الدعم الاجتماعي',
+        subtitle: 'التقدم بطلب للحصول على المساعدة المالية',
+      },
+      form: {
+        next: 'التالي',
+        previous: 'السابق',
+        submit: 'إرسال الطلب',
+        submitting: 'جارٍ الإرسال...',
+        submitSuccess: 'تم إرسال الطلب بنجاح',
+        submitError: 'حدث خطأ أثناء إرسال الطلب. يرجى المحاولة مرة أخرى.',
+        submitTimeout: 'انتهت مهلة الطلب. يرجى المحاولة مرة أخرى.',
+        submitNetworkError: 'خطأ في الشبكة. يرجى التحقق من الاتصال والمحاولة مرة أخرى.',
+        submitServerError: 'خطأ في الخادم. يرجى المحاولة مرة أخرى لاحقاً.',
+        submitValidationError: 'خطأ في التحقق. يرجى التحقق من بيانات النموذج.',
+        save: 'حفظ التقدم',
+        step1: 'المعلومات الشخصية',
+        step2: 'معلومات الأسرة والمالية',
+        step3: 'وصف الوضع',
+        fields: {
+          name: 'الاسم الكامل',
+          nationalId: 'رقم الهوية الوطنية',
+          dateOfBirth: 'تاريخ الميلاد',
+          gender: 'الجنس',
+          address: 'العنوان',
+          city: 'المدينة',
+          state: 'الولاية/المحافظة',
+          country: 'الدولة',
+          phone: 'رقم الهاتف',
+          email: 'البريد الإلكتروني',
+          maritalStatus: 'الحالة الاجتماعية',
+          dependents: 'عدد المعالين',
+          employmentStatus: 'حالة التوظيف',
+          monthlyIncome: 'الدخل الشهري',
+          housingStatus: 'حالة السكن',
+          currentFinancialSituation: 'الوضع المالي الحالي',
+          employmentCircumstances: 'ظروف التوظيف',
+          reasonForApplying: 'سبب التقديم',
+        },
+        gender: {
+          male: 'ذكر',
+          female: 'أنثى',
+          other: 'آخر',
+        },
+        maritalStatus: {
+          single: 'أعزب',
+          married: 'متزوج',
+          divorced: 'مطلق',
+          widowed: 'أرمل',
+        },
+        employmentStatus: {
+          employed: 'موظف',
+          unemployed: 'عاطل عن العمل',
+          selfEmployed: 'يعمل لحسابه الخاص',
+          retired: 'متقاعد',
+          student: 'طالب',
+        },
+        housingStatus: {
+          owned: 'ملك',
+          rented: 'مستأجر',
+          livingWithFamily: 'يعيش مع العائلة',
+          homeless: 'بلا مأوى',
+        },
+      },
+      ai: {
+        helpMeWrite: 'ساعدني في الكتابة',
+        helpMeWriteMistral: 'ساعدني في الكتابة (Mistral AI)',
+        generating: 'جارٍ إنشاء الاقتراح...',
+        suggestion: 'اقتراح الذكاء الاصطناعي',
+        accept: 'قبول',
+        edit: 'تعديل',
+        discard: 'تجاهل',
+        error: 'حدث خطأ أثناء إنشاء الاقتراح. يرجى المحاولة مرة أخرى.',
+        timeout: 'انتهت مهلة الطلب. يرجى المحاولة مرة أخرى.',
+      },
+      validation: {
+        required: 'هذا الحقل مطلوب',
+        email: 'يرجى إدخال عنوان بريد إلكتروني صحيح',
+        phone: 'يرجى إدخال رقم هاتف صحيح',
+      },
+      progress: {
+        step: 'الخطوة',
+        of: 'من',
+      },
+    },
+  },
+};
+
+i18n
+  .use(initReactI18next)
+  .init({
+    resources,
+    lng: 'en',
+    fallbackLng: 'en',
+    interpolation: {
+      escapeValue: false,
+    },
+  });
+
+export default i18n;
+
