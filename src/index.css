@@ -18,7 +18,6 @@ body {
   min-height: 100vh;
 }
 
-/* RTL Support */
 [dir='rtl'] {
   direction: rtl;
   text-align: right;
@@ -29,19 +28,15 @@ body {
   text-align: left;
 }
 
-/* Accessibility */
 *:focus-visible {
   outline: 2px solid #2563eb;
   outline-offset: 2px;
   border-radius: 4px;
 }
 
-/* Smooth transitions */
 * {
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
-
-/* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;

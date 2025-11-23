@@ -26,8 +26,6 @@ export const submitApplication = async (formData) => {
       message: 'Application submitted successfully',
     };
   } catch (error) {
-    console.error('API Error:', error);
-    
     if (error.code === 'ECONNABORTED' || error.message.includes('timeout')) {
       throw new Error('timeout');
     }
@@ -54,14 +52,10 @@ export const submitApplication = async (formData) => {
 };
 
 export const submitApplicationMock = async (formData) => {
-  console.log('🚀 Mock API Call Started - Submitting application...');
-  
   const delay = Math.random() * 1000 + 1000;
-  console.log(`⏳ Simulating network delay: ${Math.round(delay)}ms`);
   await new Promise((resolve) => setTimeout(resolve, delay));
 
   if (Math.random() < 0.05) {
-    console.error('❌ Mock API: Simulated server error');
     throw new Error('server_error');
   }
 
@@ -76,9 +70,6 @@ export const submitApplicationMock = async (formData) => {
     },
     message: 'Application submitted successfully',
   };
-
-  console.log('✅ Mock API Call Successful!');
-  console.log('📋 Response:', response);
   
   return response;
 };

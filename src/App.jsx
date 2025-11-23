@@ -175,7 +175,7 @@ function App() {
             borderRadius: 0,
           }}
         >
-          <Toolbar sx={{ py: 1.5, px: 2 }}>
+          <Toolbar sx={{ py: { xs: 1, sm: 1.5 }, px: { xs: 1.5, sm: 2 } }}>
             <Typography
               variant="h6"
               component="div"
@@ -183,6 +183,7 @@ function App() {
                 flexGrow: 1,
                 fontWeight: 600,
                 color: '#1e293b',
+                fontSize: { xs: '1rem', sm: '1.25rem' },
               }}
             >
               <AppTitle />
@@ -191,11 +192,11 @@ function App() {
               onClick={handleLanguageChange}
               aria-label="Change language"
               sx={{
-                ml: isRTL ? 0 : 2,
-                mr: isRTL ? 2 : 0,
+                ml: isRTL ? 0 : { xs: 1, sm: 2 },
+                mr: isRTL ? { xs: 1, sm: 2 } : 0,
                 color: '#2563eb',
                 borderRadius: 0,
-                padding: '6px 12px',
+                padding: { xs: '4px 8px', sm: '6px 12px' },
                 transition: 'all 0.2s ease-in-out',
                 '&:hover': {
                   background: '#f1f5f9',
@@ -203,8 +204,8 @@ function App() {
                 },
               }}
             >
-              <LanguageIcon sx={{ mr: 0.5 }} />
-              <Typography variant="body2" sx={{ fontWeight: 600 }}>
+              <LanguageIcon sx={{ fontSize: { xs: 18, sm: 20 }, mr: { xs: 0.25, sm: 0.5 } }} />
+              <Typography variant="body2" sx={{ fontWeight: 600, fontSize: { xs: '0.75rem', sm: '0.875rem' }, display: { xs: 'none', sm: 'block' } }}>
                 {language === 'en' ? 'Arabic' : 'English'}
               </Typography>
             </IconButton>

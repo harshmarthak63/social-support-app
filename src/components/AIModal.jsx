@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery, useTheme } from '@mui/material';
 import {
   Dialog,
   DialogTitle,
@@ -23,6 +24,8 @@ import { updateStep3 } from '../store/slices/formSlice';
 function AIModal({ setValue }) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const aiSuggestion = useSelector((state) => state.ui.aiSuggestion);
   const aiField = useSelector((state) => state.ui.aiField);
   const isLoading = useSelector((state) => state.ui.isLoading);
@@ -66,12 +69,15 @@ function AIModal({ setValue }) {
       onClose={handleDiscard}
       maxWidth="md"
       fullWidth
+      fullScreen={isMobile}
       aria-labelledby="ai-modal-title"
       aria-describedby="ai-modal-description"
       PaperProps={{
         sx: {
-          borderRadius: 3,
-          boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
+          borderRadius: { xs: 0, sm: 3 },
+          boxShadow: { xs: 'none', sm: '0 20px 60px rgba(0, 0, 0, 0.3)' },
+          m: { xs: 0, sm: 2 },
+          maxHeight: { xs: '100vh', sm: '90vh' },
         },
       }}
     >
@@ -105,7 +111,7 @@ function AIModal({ setValue }) {
           <CloseIcon />
         </IconButton>
       </DialogTitle>
-      <DialogContent sx={{ pt: 3, pb: 2 }}>
+      <DialogContent sx={{ pt: { xs: 2, sm: 3 }, pb: { xs: 1, sm: 2 }, px: { xs: 2, sm: 3 } }}>
         <Box
           sx={{
             mb: 2,
@@ -143,7 +149,7 @@ function AIModal({ setValue }) {
             <TextField
               fullWidth
               multiline
-              rows={12}
+              rows={isMobile ? 8 : 12}
               value={editedText}
               onChange={(e) => setEditedText(e.target.value)}
               variant="outlined"
@@ -151,7 +157,7 @@ function AIModal({ setValue }) {
               sx={{
                 '& .MuiOutlinedInput-root': {
                   borderRadius: 2,
-                  fontSize: '0.95rem',
+                  fontSize: { xs: '0.875rem', sm: '0.95rem' },
                   lineHeight: 1.6,
                 },
               }}
@@ -159,13 +165,14 @@ function AIModal({ setValue }) {
           </Fade>
         )}
       </DialogContent>
-      <DialogActions sx={{ px: 3, pb: 3, gap: 1 }}>
+      <DialogActions sx={{ px: { xs: 2, sm: 3 }, pb: { xs: 2, sm: 3 }, gap: 1, flexDirection: { xs: 'column-reverse', sm: 'row' } }}>
         <Button
           onClick={handleDiscard}
           variant="outlined"
           aria-label={t('ai.discard')}
+          fullWidth={isMobile}
           sx={{
-            minWidth: 120,
+            minWidth: { xs: '100%', sm: 120 },
             borderWidth: 2,
             '&:hover': {
               borderWidth: 2,
@@ -180,13 +187,14 @@ function AIModal({ setValue }) {
           disabled={isLoading || !editedText}
           startIcon={<CheckCircleIcon />}
           aria-label={t('ai.accept')}
+          fullWidth={isMobile}
           sx={{
-            minWidth: 140,
+            minWidth: { xs: '100%', sm: 140 },
             background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
             '&:hover': {
               background: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
-              transform: 'translateY(-2px)',
-              boxShadow: '0 8px 20px rgba(16, 185, 129, 0.4)',
+              transform: { xs: 'none', sm: 'translateY(-2px)' },
+              boxShadow: { xs: 'none', sm: '0 8px 20px rgba(16, 185, 129, 0.4)' },
             },
             transition: 'all 0.2s ease-in-out',
             '&:disabled': {

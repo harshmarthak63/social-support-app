@@ -53,8 +53,6 @@ export const generateMistralSuggestion = async (fieldName, userContext = '') => 
 
     return response.data.choices[0].message.content.trim();
   } catch (error) {
-    console.error('Mistral AI API Error:', error);
-    
     if (error.code === 'ECONNABORTED' || error.message.includes('timeout')) {
       throw new Error('timeout');
     }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, TextField, Grid, Button } from '@mui/material';
+import { Box, TextField, Grid, Button, useMediaQuery, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
@@ -10,6 +10,8 @@ import { generateMistralSuggestion } from '../../services/mistralService';
 function Step3SituationDescriptions({ register, errors, setValue, watch }) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [loadingField, setLoadingField] = useState(null);
 
   const fields = [
@@ -52,14 +54,12 @@ function Step3SituationDescriptions({ register, errors, setValue, watch }) {
       suggestion = await generateMistralSuggestion(fieldName, context);
       dispatch(setAISuggestion({ field: fieldName, text: suggestion }));
     } catch (mistralErr) {
-      console.error('Mistral AI error:', mistralErr);
       mistralError = mistralErr;
       
       try {
         suggestion = await generateAISuggestion(fieldName, context);
         dispatch(setAISuggestion({ field: fieldName, text: suggestion }));
       } catch (openAIErr) {
-        console.error('OpenAI error:', openAIErr);
         openAIError = openAIErr;
         
         let errorMessage = t('ai.error') || 'Unable to generate AI suggestion.';
@@ -94,7 +94,7 @@ function Step3SituationDescriptions({ register, errors, setValue, watch }) {
 
   return (
     <Box>
-      <Grid container spacing={3}>
+      <Grid container spacing={{ xs: 2, sm: 3 }}>
         {fields.map((field) => (
           <Grid item xs={12} key={field.name}>
             <Box
@@ -137,23 +137,24 @@ function Step3SituationDescriptions({ register, errors, setValue, watch }) {
                 <Button
                   onClick={() => handleAIHelp(field.name)}
                   disabled={loadingField === field.name}
-                  startIcon={<AutoAwesomeIcon sx={{ fontSize: 18 }} />}
+                  startIcon={<AutoAwesomeIcon sx={{ fontSize: { xs: 16, sm: 18 } }} />}
                   variant="outlined"
                   size="small"
+                  fullWidth={isMobile}
                   sx={{
                     borderWidth: 1.5,
                     borderColor: '#8b5cf6',
                     color: '#8b5cf6',
                     background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(139, 92, 246, 0.1) 100%)',
-                    minWidth: 120,
-                    fontSize: '0.75rem',
-                    padding: '4px 12px',
+                    minWidth: { xs: '100%', sm: 120 },
+                    fontSize: { xs: '0.7rem', sm: '0.75rem' },
+                    padding: { xs: '6px 10px', sm: '4px 12px' },
                     '&:hover': {
                       borderColor: '#7c3aed',
                       background: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
                       color: '#ffffff',
-                      transform: 'translateY(-1px)',
-                      boxShadow: '0 2px 8px rgba(139, 92, 246, 0.3)',
+                      transform: { xs: 'none', sm: 'translateY(-1px)' },
+                      boxShadow: { xs: 'none', sm: '0 2px 8px rgba(139, 92, 246, 0.3)' },
                       borderWidth: 1.5,
                     },
                     '&:disabled': {

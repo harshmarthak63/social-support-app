@@ -10,7 +10,7 @@ function Step2FamilyFinancial({ register, errors, setValue, watch }) {
 
   return (
     <Box>
-      <Grid container spacing={3}>
+      <Grid container spacing={{ xs: 2, sm: 3 }}>
         <Grid item xs={12} sm={6}>
           <TextField
             fullWidth

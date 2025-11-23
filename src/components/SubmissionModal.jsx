@@ -9,6 +9,8 @@ import {
   Box,
   Paper,
   Divider,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
@@ -16,6 +18,8 @@ import { useTranslation } from 'react-i18next';
 
 function SubmissionModal({ open, onClose, submissionData, formData }) {
   const { t } = useTranslation();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <Dialog
@@ -23,10 +27,13 @@ function SubmissionModal({ open, onClose, submissionData, formData }) {
       onClose={onClose}
       maxWidth="md"
       fullWidth
+      fullScreen={isMobile}
       PaperProps={{
         sx: {
-          borderRadius: 3,
-          boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
+          borderRadius: { xs: 0, sm: 3 },
+          boxShadow: { xs: 'none', sm: '0 20px 60px rgba(0, 0, 0, 0.3)' },
+          m: { xs: 0, sm: 2 },
+          maxHeight: { xs: '100vh', sm: '90vh' },
         },
       }}
     >
@@ -58,10 +65,10 @@ function SubmissionModal({ open, onClose, submissionData, formData }) {
           <CloseIcon />
         </Button>
       </DialogTitle>
-      <DialogContent sx={{ pt: 3, pb: 2 }}>
+      <DialogContent sx={{ pt: { xs: 2, sm: 3 }, pb: { xs: 1, sm: 2 }, px: { xs: 2, sm: 3 } }}>
         {submissionData && (
           <Box sx={{ mb: 3 }}>
-            <Typography variant="h6" sx={{ mb: 2, fontWeight: 600, color: '#1e293b' }}>
+            <Typography variant="h6" sx={{ mb: 2, fontWeight: 600, color: '#1e293b', fontSize: { xs: '1rem', sm: '1.25rem' } }}>
               Application Details
             </Typography>
             <Paper
@@ -109,7 +116,7 @@ function SubmissionModal({ open, onClose, submissionData, formData }) {
         <Divider sx={{ my: 2 }} />
 
         <Box>
-          <Typography variant="h6" sx={{ mb: 2, fontWeight: 600, color: '#1e293b' }}>
+          <Typography variant="h6" sx={{ mb: 2, fontWeight: 600, color: '#1e293b', fontSize: { xs: '1rem', sm: '1.25rem' } }}>
             Submitted Form Data (mock API call)
           </Typography>
           <Paper
@@ -126,7 +133,7 @@ function SubmissionModal({ open, onClose, submissionData, formData }) {
               style={{
                 margin: 0,
                 fontFamily: 'monospace',
-                fontSize: '0.875rem',
+                fontSize: isMobile ? '0.75rem' : '0.875rem',
                 color: '#1e293b',
                 whiteSpace: 'pre-wrap',
                 wordBreak: 'break-word',
@@ -137,12 +144,13 @@ function SubmissionModal({ open, onClose, submissionData, formData }) {
           </Paper>
         </Box>
       </DialogContent>
-      <DialogActions sx={{ px: 3, pb: 3 }}>
+      <DialogActions sx={{ px: { xs: 2, sm: 3 }, pb: { xs: 2, sm: 3 } }}>
         <Button
           onClick={onClose}
           variant="contained"
+          fullWidth={isMobile}
           sx={{
-            minWidth: 120,
+            minWidth: { xs: '100%', sm: 120 },
             background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
             '&:hover': {
               background: 'linear-gradient(135deg, #059669 0%, #047857 100%)',

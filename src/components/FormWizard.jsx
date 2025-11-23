@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import { useMediaQuery, useTheme } from '@mui/material';
 import {
   Box,
   Paper,
@@ -42,8 +43,8 @@ const CustomStepIcon = ({ active, completed, icon }) => {
   return (
     <Box
       sx={{
-        width: 48,
-        height: 48,
+        width: { xs: 40, sm: 44, md: 48 },
+        height: { xs: 40, sm: 44, md: 48 },
         borderRadius: '50%',
         display: 'flex',
         alignItems: 'center',
@@ -58,9 +59,9 @@ const CustomStepIcon = ({ active, completed, icon }) => {
           ? '0 4px 12px rgba(37, 99, 235, 0.3)'
           : '0 2px 8px rgba(0, 0, 0, 0.1)',
         transition: 'all 0.3s ease-in-out',
-        transform: active ? 'scale(1.1)' : 'scale(1)',
+        transform: active ? { xs: 'scale(1.05)', sm: 'scale(1.1)' } : 'scale(1)',
         '& svg': {
-          fontSize: 24,
+          fontSize: { xs: 20, sm: 22, md: 24 },
         },
       }}
     >
@@ -72,6 +73,8 @@ const CustomStepIcon = ({ active, completed, icon }) => {
 function FormWizard() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const currentStep = useSelector((state) => state.form.currentStep);
   const formData = useSelector((state) => state.form);
   const showAIModal = useSelector((state) => state.ui.showAIModal);
@@ -184,8 +187,6 @@ function FormWizard() {
         situationDescriptions: currentFormData.step3,
       };
 
-      console.log('📋 Form Data (Object):', completeFormData);
-
       const response = await submitApplicationMock(completeFormData);
       
       if (response.success) {
@@ -200,8 +201,6 @@ function FormWizard() {
         }, 500);
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
-      
       let errorMessage = t('form.submitError') || 'Error submitting form. Please try again.';
       
       switch (error.message) {
@@ -262,6 +261,7 @@ function FormWizard() {
             sx={{
               mb: 1,
               fontWeight: 700,
+              fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' },
               background: 'linear-gradient(135deg, #2563eb 0%, #8b5cf6 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
@@ -281,18 +281,21 @@ function FormWizard() {
             activeStep={currentStep - 1}
             alternativeLabel
             sx={{
-              mb: 5,
+              mb: { xs: 3, sm: 4, md: 5 },
+              '& .MuiStepLabel-label': {
+                fontSize: { xs: '0.75rem', sm: '0.875rem', md: '0.95rem' },
+              },
               '& .MuiStepConnector-root': {
-                top: '23px',
+                top: { xs: '20px', sm: '23px' },
                 position: 'absolute',
                 ...(isRTL
                   ? {
-                      left: 'calc(50% + 32px)',
-                      right: 'calc(-50% + 32px)',
+                      left: { xs: 'calc(50% + 24px)', sm: 'calc(50% + 32px)' },
+                      right: { xs: 'calc(-50% + 24px)', sm: 'calc(-50% + 32px)' },
                     }
                   : {
-                      left: 'calc(-50% + 32px)',
-                      right: 'calc(50% + 32px)',
+                      left: { xs: 'calc(-50% + 24px)', sm: 'calc(-50% + 32px)' },
+                      right: { xs: 'calc(50% + 24px)', sm: 'calc(50% + 32px)' },
                     }),
               },
               '& .MuiStepConnector-line': {
@@ -338,9 +341,11 @@ function FormWizard() {
               <Box
                 sx={{
                   display: 'flex',
+                  flexDirection: { xs: 'column', sm: 'row' },
                   justifyContent: 'space-between',
-                  mt: 5,
-                  pt: 3,
+                  gap: { xs: 2, sm: 0 },
+                  mt: { xs: 3, sm: 4, md: 5 },
+                  pt: { xs: 2, sm: 3 },
                   borderTop: '1px solid',
                   borderColor: 'divider',
                 }}
@@ -351,12 +356,14 @@ function FormWizard() {
                   variant="outlined"
                   startIcon={<ArrowBackIcon />}
                   aria-label={t('form.previous')}
+                  fullWidth={!isRTL && isMobile}
                   sx={{
-                    minWidth: 140,
+                    minWidth: { xs: '100%', sm: 140 },
                     borderWidth: 2,
+                    order: isRTL ? (isMobile ? 2 : 1) : 1,
                     '&:hover': {
                       borderWidth: 2,
-                      transform: 'translateX(-4px)',
+                      transform: { xs: 'none', sm: 'translateX(-4px)' },
                     },
                     transition: 'all 0.2s ease-in-out',
                   }}
@@ -370,10 +377,12 @@ function FormWizard() {
                     variant="contained"
                     endIcon={<ArrowForwardIcon />}
                     aria-label={t('form.next')}
+                    fullWidth={!isRTL && isMobile}
                     sx={{
-                      minWidth: 140,
+                      minWidth: { xs: '100%', sm: 140 },
+                      order: isRTL ? (isMobile ? 1 : 2) : 2,
                       '&:hover': {
-                        transform: 'translateX(4px)',
+                        transform: { xs: 'none', sm: 'translateX(4px)' },
                       },
                       transition: 'all 0.2s ease-in-out',
                     }}
@@ -388,8 +397,10 @@ function FormWizard() {
                     endIcon={isSubmitting ? <CircularProgress size={20} color="inherit" /> : <SendIcon />}
                     disabled={isSubmitting}
                     aria-label={t('form.submit')}
+                    fullWidth={!isRTL && isMobile}
                     sx={{
-                      minWidth: 180,
+                      minWidth: { xs: '100%', sm: 180 },
+                      order: isRTL ? (isMobile ? 1 : 2) : 2,
                       background: isSubmitting 
                         ? '#cbd5e1' 
                         : 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
@@ -397,8 +408,8 @@ function FormWizard() {
                         background: isSubmitting 
                           ? '#cbd5e1' 
                           : 'linear-gradient(135deg, #059669 0%, #047857 100%)',
-                        transform: isSubmitting ? 'none' : 'translateY(-2px)',
-                        boxShadow: isSubmitting ? 'none' : '0 8px 20px rgba(16, 185, 129, 0.4)',
+                        transform: isSubmitting ? 'none' : { xs: 'none', sm: 'translateY(-2px)' },
+                        boxShadow: isSubmitting ? 'none' : { xs: 'none', sm: '0 8px 20px rgba(16, 185, 129, 0.4)' },
                       },
                       transition: 'all 0.2s ease-in-out',
                       '&:disabled': {
