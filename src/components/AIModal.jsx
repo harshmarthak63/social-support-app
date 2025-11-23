@@ -31,7 +31,7 @@ function AIModal({ setValue }) {
   const isLoading = useSelector((state) => state.ui.isLoading);
   const [editedText, setEditedText] = useState(aiSuggestion || '');
 
-  React.useEffect(() => {
+  useEffect(() => {
     setEditedText(aiSuggestion || '');
   }, [aiSuggestion]);
 
