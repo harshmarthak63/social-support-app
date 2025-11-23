@@ -40,7 +40,7 @@ A modern, responsive web application for citizens to apply for financial assista
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/harshmarthak63/social-support-app.git
 cd social-support-app
 ```
 
@@ -57,12 +57,67 @@ VITE_MISTRAL_API_KEY=your_mistral_api_key_here
 
 **Note**: At least one API key (Mistral AI or OpenAI) is recommended for AI assistance. The application will automatically use the available service with smart fallback. If both are missing, AI assistance features will be unavailable.
 
-4. Start the development server:
+### How to Run the Project
+
+1. **Start the development server:**
 ```bash
 npm run dev
 ```
 
-The application will open at `http://localhost:3000` (or the port shown in the terminal).
+2. **Access the application:**
+   - The application will automatically open in your default browser
+   - If not, navigate to `http://localhost:3000` (or the port shown in the terminal)
+   - The terminal will display the local URL where the app is running
+
+3. **Build for production:**
+```bash
+npm run build
+```
+   - This creates an optimized production build in the `dist` directory
+   - The build files can be deployed to any static hosting service
+
+4. **Preview production build:**
+```bash
+npm run preview
+```
+   - This serves the production build locally for testing
+
+### How to Set Up the OpenAI API Key
+
+1. **Get your OpenAI API key:**
+   - Go to [OpenAI Platform](https://platform.openai.com/)
+   - Sign up or log in to your account
+   - Navigate to [API Keys](https://platform.openai.com/api-keys)
+   - Click "Create new secret key"
+   - Copy the API key (you won't be able to see it again)
+
+2. **Add the API key to your project:**
+   - Create a `.env` file in the root directory of the project (if it doesn't exist)
+   - Add the following line:
+   ```env
+   VITE_OPENAI_API_KEY=sk-your-actual-api-key-here
+   ```
+   - Replace `sk-your-actual-api-key-here` with your actual OpenAI API key
+
+3. **Restart the development server:**
+   - Stop the current server (Ctrl+C)
+   - Start it again:
+   ```bash
+   npm run dev
+   ```
+   - Environment variables are loaded when the server starts, so a restart is required
+
+4. **Verify the setup:**
+   - Navigate to Step 3 of the form
+   - Click the "Help Me Write" button next to any textarea
+   - If the API key is correctly configured, AI suggestions will be generated
+   - If there's an error, check the browser console for details
+
+**Important Notes:**
+- Never commit your `.env` file to version control (it's already in `.gitignore`)
+- Keep your API key secure and don't share it publicly
+- The API key is used client-side, so be aware of usage limits and costs
+- If you only have a Mistral AI key, the app will use that as primary and fallback to OpenAI if Mistral fails
 
 ### Building for Production
 
