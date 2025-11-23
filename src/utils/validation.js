@@ -8,7 +8,3 @@ export const validatePhone = (phone) => {
   return phoneRegex.test(phone) && phone.replace(/\D/g, '').length >= 10;
 };
 
-export const validateRequired = (value) => {
-  return value && value.trim().length > 0;
-};
-

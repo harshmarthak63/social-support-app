@@ -354,7 +354,7 @@ function FormWizard() {
                   disabled={currentStep === 1}
                   onClick={handlePrevious}
                   variant="outlined"
-                  startIcon={<ArrowBackIcon />}
+                  startIcon={isRTL ? <ArrowForwardIcon /> : <ArrowBackIcon />}
                   aria-label={t('form.previous')}
                   fullWidth={!isRTL && isMobile}
                   sx={{
@@ -363,7 +363,7 @@ function FormWizard() {
                     order: isRTL ? (isMobile ? 2 : 1) : 1,
                     '&:hover': {
                       borderWidth: 2,
-                      transform: { xs: 'none', sm: 'translateX(-4px)' },
+                      transform: { xs: 'none', sm: isRTL ? 'translateX(4px)' : 'translateX(-4px)' },
                     },
                     transition: 'all 0.2s ease-in-out',
                   }}
@@ -375,14 +375,14 @@ function FormWizard() {
                     type="button"
                     onClick={handleNext}
                     variant="contained"
-                    endIcon={<ArrowForwardIcon />}
+                    endIcon={isRTL ? <ArrowBackIcon /> : <ArrowForwardIcon />}
                     aria-label={t('form.next')}
                     fullWidth={!isRTL && isMobile}
                     sx={{
                       minWidth: { xs: '100%', sm: 140 },
                       order: isRTL ? (isMobile ? 1 : 2) : 2,
                       '&:hover': {
-                        transform: { xs: 'none', sm: 'translateX(4px)' },
+                        transform: { xs: 'none', sm: isRTL ? 'translateX(-4px)' : 'translateX(4px)' },
                       },
                       transition: 'all 0.2s ease-in-out',
                     }}
